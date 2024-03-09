@@ -19,7 +19,7 @@ class DoctorController extends Controller
             return $query->where('doctor_name', 'like', '%' . $doctor_name . '%');
         })
         ->orderBy('id', 'desc')
-        ->paginate(10);
+        ->paginate(5);
 
         return view('pages.doctors.index', compact('doctors'));
     }
