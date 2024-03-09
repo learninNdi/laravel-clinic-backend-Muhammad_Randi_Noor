@@ -49,26 +49,6 @@
                                     </div>
                                 @enderror
                             </div>
-                            {{-- <div class="form-group">
-                                <label>Password</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-lock"></i>
-                                        </div>
-                                    </div>
-                                    <input type="password"
-                                        class="form-control @error('password')
-                                is-invalid
-                            @enderror"
-                                        name="password">
-                                </div>
-                                @error('password')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div> --}}
                             <div class="form-group">
                                 <label>Specialist</label>
                                 <input type="text"
@@ -102,12 +82,18 @@
 
                             {{-- field buat photo --}}
 
-                            {{-- <div class="form-group">
-                                {{ csrf_field() }}
-                                <label>Photo</label>
-                                <br />
-                                <input type="file" name="photo">
-                            </div> --}}
+                            <div class="form-group">
+                                <label for="photo" class="form-label">Doctor Photo</label>
+                                <img class="img-preview img-fluid mb-3 col-sm-5" style="max-height: 300px; max-width: 200px;">
+                                <input class="form-control @error('photo')
+                                    is-invalid @enderror" type="file" id="photo" name="photo"
+                                    onchange="previewImage()">
+                                @error('photo')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
 
                             <div class="form-group">
                                 <label>Address</label>
@@ -139,4 +125,19 @@
 @endsection
 
 @push('scripts')
+    <script type="text/javascript">
+        function previewImage() {
+            const photo = document.getElementById('photo');
+            const imgPreview = document.querySelector('.img-preview');
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(photo.files[0]);
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+    </script>
 @endpush

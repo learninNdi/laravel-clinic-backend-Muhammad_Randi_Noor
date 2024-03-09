@@ -30,7 +30,7 @@
 
 
                 <div class="card">
-                    <form action="{{ route('doctors.update', $doctor) }}" method="POST">
+                    <form action="{{ route('doctors.update', $doctor) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-header">
@@ -83,15 +83,25 @@
 
                             {{-- field buat photo --}}
 
-                            {{-- <div class="form-group">
-                                {{ csrf_field() }}
-                                <label>Photo</label>
-                                <br />
-                                <input type="file" name="photo" id="photo">
-                                <br />
-                                <img id="preview" src="{{ asset('storage/app/public/'.$doctor->photo) }}" alt="photo" />
-                                {{-- <img id="preview" src="https://awsimages.detik.net.id/community/media/visual/2023/04/14/gambar-pemandangan-6.jpeg?w=3000" alt="photo" /> --}}
-                            {{--</div> --}}
+                            <div class="form-group">
+                                <label for="photo" class="form-label">Doctor Photo</label>
+                                <input type="hidden" name="oldImage" value="{{$doctor->photo}}" />
+                                @if ($doctor->photo)
+                                <img class="img-preview img-fluid mb-3 col-sm-5 d-block" style="max-height: 300px; max-width: 200px;"
+                                src="{{asset('storage/'.$doctor->photo)}}">
+                                @else
+                                <img class="img-preview img-fluid mb-3 col-sm-5" style="max-height: 300px; max-width: 200px;">
+                                @endif
+
+                                <input class="form-control @error('photo')
+                                    is-invalid @enderror" type="file" id="photo" name="photo"
+                                    onchange="previewImage()">
+                                @error('photo')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
 
                             <div class="form-group">
                                 <label>Address</label>
@@ -132,15 +142,19 @@
 @endsection
 
 @push('scripts')
-    <script>
-        // photo.onchange = e => {
-        //     preview = document.getElementById('preview');
-        //     preview.style.display = 'block';
-        //     const [file] = photo.files;
+    <script type="text/javascript">
+        function previewImage() {
+            const photo = document.getElementById('photo');
+            const imgPreview = document.querySelector('.img-preview');
 
-        //     if (file) {
-        //         preview.src = URL.createObjectURL(file);
-        //     }
-        // }
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(photo.files[0]);
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
     </script>
 @endpush

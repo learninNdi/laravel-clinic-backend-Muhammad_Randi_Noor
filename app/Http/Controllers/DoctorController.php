@@ -40,7 +40,7 @@ class DoctorController extends Controller
             'doctor_phone' => 'required',
             'doctor_email' => 'required|email',
             'sip' => 'required',
-            'photo' => 'nullable|image|mimes:jpeg,jpg,png,',
+            'photo' => 'nullable|image|file|max:1024',
             'address' => 'nullable',
         ]);
 
@@ -51,14 +51,9 @@ class DoctorController extends Controller
         $doctor->doctor_email = $request->doctor_email;
         $doctor->sip = $request->sip;
 
-        if (is_file($request->photo))
+        if ($request->file('photo'))
         {
-
-            // upload file
-            // $request->photo->storeAs('assets/upload/photo', time() . "." . $request->photo->extension());
-            $doctor->photo = time() . "." . $request->photo->extension();
-            // Storage::put(time() . "." . $request->photo->extension(), 'Contents');
-            Storage::disk('public')->put(time() . "." . $request->photo->extension(), 'Contents');
+            $doctor->photo = $request->file('photo')->store('post-images');
         }
 
         if ($request->address)
@@ -97,7 +92,7 @@ class DoctorController extends Controller
             'doctor_phone' => 'required',
             'doctor_email' => 'required|email',
             'sip' => 'required',
-            'photo' => 'nullable|image|mimes:jpeg,jpg,png,',
+            'photo' => 'nullable|image|file|max:1024',
             'address' => 'nullable',
         ]);
 
@@ -108,12 +103,14 @@ class DoctorController extends Controller
         $doctor->doctor_email = $request->doctor_email;
         $doctor->sip = $request->sip;
 
-        if (is_file($request->photo))
+        if ($request->file('photo'))
         {
+            if ($request->oldImage)
+            {
+                Storage::delete($request->oldImage);
+            }
 
-            // upload file
-            $request->photo->storeAs('assets/upload/photo', time() . "." . $request->photo->extension());
-            $doctor->photo = time() . "." . $request->photo->extension();
+            $doctor->photo = $request->file('photo')->store('post-images');
         }
 
         if ($doctor->address)
@@ -133,12 +130,10 @@ class DoctorController extends Controller
         $imageName = $doctor->photo;
         $doctor->delete();
 
-        if (File::exists(asset('storage/app/public/'.$imageName))) {
-            File::delete(asset('storage/app/public/'.$imageName));
+        if (Storage::exists($imageName)){
+            Storage::delete($imageName);
         }
 
         return redirect()->route('doctors.index')->with('success', 'Doctor deleted successfully');
     }
 }
-
-// storage\app\1709899414.png

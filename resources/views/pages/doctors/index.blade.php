@@ -56,12 +56,12 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Specialist</th>
                                             <th>Created At</th>
+                                            <th>Photo</th>
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($doctors as $doctor)
@@ -79,6 +79,17 @@
                                                     {{ $doctor->doctor_specialist }}
                                                 </td>
                                                 <td>{{ $doctor->created_at }}</td>
+                                                <td>
+                                                    @if ($doctor->photo)
+                                                        <div>
+                                                            <img id="preview" src="{{ asset('storage/'.$doctor->photo) }}" alt="photo"
+                                                            style="max-height: 150px; max-width: 100px; margin: 10px;"
+                                                            />
+                                                        </div>
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href='{{ route('doctors.edit', $doctor->id) }}'
