@@ -16,17 +16,17 @@
                         <a class="nav-link"
                             href="{{ url('dashboard-general-dashboard') }}">General Dashboard</a>
                     </li>
-                </ul>
-                <ul class="dropdown-menu">
-                    <li class=''>
+                    <li>
                         <a class="nav-link"
                             href="{{ route('users.index') }}">Users</a>
                     </li>
-                </ul>
-                <ul class="dropdown-menu">
-                    <li class=''>
+                    <li>
                         <a class="nav-link"
                             href="{{ route('doctors.index') }}">Doctors</a>
+                    </li>
+                    <li>
+                        <a class="nav-link"
+                            href="{{ route('doctor-schedules.index') }}">Doctor Schedule</a>
                     </li>
                 </ul>
             </li>

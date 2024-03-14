@@ -7,7 +7,6 @@ use App\Models\Doctor;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
 
 class DoctorController extends Controller
 {
@@ -42,6 +41,8 @@ class DoctorController extends Controller
             'sip' => 'required',
             'photo' => 'nullable|image|file|max:1024',
             'address' => 'nullable',
+            'id_ihs' => 'required',
+            'nik' => 'required',
         ]);
 
         $doctor = new Doctor();
@@ -50,11 +51,10 @@ class DoctorController extends Controller
         $doctor->doctor_phone = $request->doctor_phone;
         $doctor->doctor_email = $request->doctor_email;
         $doctor->sip = $request->sip;
+        $doctor->id_ihs = $request->id_ihs;
+        $doctor->nik = $request->nik;
 
-        if ($request->file('photo'))
-        {
-            $doctor->photo = $request->file('photo')->store('post-images');
-        }
+        $doctor->photo = $request->file('photo') ? $request->file('photo')->store('assets/images/doctors') : null;
 
         if ($request->address)
         {
@@ -94,6 +94,8 @@ class DoctorController extends Controller
             'sip' => 'required',
             'photo' => 'nullable|image|file|max:1024',
             'address' => 'nullable',
+            'id_ihs' => 'required',
+            'nik' => 'required',
         ]);
 
         $doctor = Doctor::find($id);
@@ -102,6 +104,8 @@ class DoctorController extends Controller
         $doctor->doctor_phone = $request->doctor_phone;
         $doctor->doctor_email = $request->doctor_email;
         $doctor->sip = $request->sip;
+        $doctor->id_ihs = $request->id_ihs;
+        $doctor->nik = $request->nik;
 
         if ($request->file('photo'))
         {
@@ -110,7 +114,7 @@ class DoctorController extends Controller
                 Storage::delete($request->oldImage);
             }
 
-            $doctor->photo = $request->file('photo')->store('post-images');
+            $doctor->photo = $request->file('photo')->store('assets/images/doctors');
         }
 
         if ($doctor->address)

@@ -21,7 +21,7 @@ class DoctorFactory extends Factory
             'doctor_specialist' => fake()->word(),
             'doctor_phone' => fake()->phoneNumber(),
             'doctor_email' => fake()->unique()->safeEmail(),
-            'photo' => fake()->imageUrl(),
+            // 'photo' => fake()->imageUrl(),
             'address' => fake()->address(),
             'sip' => fake()->numberBetween(1000, 9999),
         ];
