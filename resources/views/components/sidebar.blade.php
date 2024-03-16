@@ -18,15 +18,19 @@
                     </li>
                     <li>
                         <a class="nav-link"
-                            href="{{ route('users.index') }}">Users</a>
-                    </li>
-                    <li>
-                        <a class="nav-link"
                             href="{{ route('doctors.index') }}">Doctors</a>
                     </li>
                     <li>
                         <a class="nav-link"
                             href="{{ route('doctor-schedules.index') }}">Doctor Schedule</a>
+                    </li>
+                    <li>
+                        <a class="nav-link"
+                            href="{{ route('patients.index') }}">Patients</a>
+                    </li>
+                    <li>
+                        <a class="nav-link"
+                            href="{{ route('users.index') }}">Users</a>
                     </li>
                 </ul>
             </li>

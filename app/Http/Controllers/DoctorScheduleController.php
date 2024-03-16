@@ -35,22 +35,83 @@ class DoctorScheduleController extends Controller
     {
         $request->validate([
             'doctor_id' => 'required',
-            'day' => 'required',
-            'time' => 'required',
-            'status' => 'required',
-            'note' => 'required',
+            // 'day' => 'required',
+            // 'time' => 'required',
+            // 'status' => 'required',
+            // 'note' => 'required',
         ]);
 
-        $doctorSchedule = new DoctorSchedule;
-        $doctorSchedule->doctor_id = $request->doctor_id;
-        $doctorSchedule->day = $request->day;
-        $doctorSchedule->time = $request->time;
-        $doctorSchedule->status = $request->status;
-        $doctorSchedule->note = $request->note;
+        // $doctorSchedule = new DoctorSchedule;
+        // $doctorSchedule->doctor_id = $request->doctor_id;
+        // $doctorSchedule->day = $request->day;
+        // $doctorSchedule->time = $request->time;
+        // $doctorSchedule->status = $request->status;
+        // $doctorSchedule->note = $request->note;
 
-        $doctorSchedule->save();
+        if ($request->senin)
+        {
+            $doctorSchedule = new DoctorSchedule;
+            $doctorSchedule->doctor_id = $request->doctor_id;
+            $doctorSchedule->day = 'Senin';
+            $doctorSchedule->time = $request->senin;
+            $doctorSchedule->save();
+        }
 
-        return redirect()->route('pages.doctor_schedules.index')->with('success', 'Doctor schedule created successfully');
+        if ($request->selasa)
+        {
+            $doctorSchedule = new DoctorSchedule;
+            $doctorSchedule->doctor_id = $request->doctor_id;
+            $doctorSchedule->day = 'Selasa';
+            $doctorSchedule->time = $request->selasa;
+            $doctorSchedule->save();
+        }
+
+        if ($request->rabu)
+        {
+            $doctorSchedule = new DoctorSchedule;
+            $doctorSchedule->doctor_id = $request->doctor_id;
+            $doctorSchedule->day = 'Rabu';
+            $doctorSchedule->time = $request->rabu;
+            $doctorSchedule->save();
+        }
+
+        if ($request->kamis)
+        {
+            $doctorSchedule = new DoctorSchedule;
+            $doctorSchedule->doctor_id = $request->doctor_id;
+            $doctorSchedule->day = 'Kamis';
+            $doctorSchedule->time = $request->kamis;
+            $doctorSchedule->save();
+        }
+
+        if ($request->jumat)
+        {
+            $doctorSchedule = new DoctorSchedule;
+            $doctorSchedule->doctor_id = $request->doctor_id;
+            $doctorSchedule->day = 'Jumat';
+            $doctorSchedule->time = $request->jumat;
+            $doctorSchedule->save();
+        }
+
+        if ($request->sabtu)
+        {
+            $doctorSchedule = new DoctorSchedule;
+            $doctorSchedule->doctor_id = $request->doctor_id;
+            $doctorSchedule->day = 'Sabtu';
+            $doctorSchedule->time = $request->sabtu;
+            $doctorSchedule->save();
+        }
+
+        if ($request->minggu)
+        {
+            $doctorSchedule = new DoctorSchedule;
+            $doctorSchedule->doctor_id = $request->doctor_id;
+            $doctorSchedule->day = 'Minggu';
+            $doctorSchedule->time = $request->minggu;
+            $doctorSchedule->save();
+        }
+
+        return redirect()->route('doctor-schedules.index')->with('success', 'Doctor schedule created successfully');
     }
 
     // edit
@@ -67,22 +128,21 @@ class DoctorScheduleController extends Controller
     {
         $request->validate([
             'doctor_id' => 'required',
-            'day' => 'required',
-            'time' => 'required',
-            'status' => 'required',
-            'note' => 'required',
+            // 'day' => 'required',
+            // 'time' => 'required',
+            // 'status' => 'required',
+            // 'note' => 'required',
         ]);
 
         $doctorSchedule = DoctorSchedule::find($id);
         $doctorSchedule->doctor_id = $request->doctor_id;
-        $doctorSchedule->day = $request->day;
         $doctorSchedule->time = $request->time;
-        $doctorSchedule->status = $request->status;
-        $doctorSchedule->note = $request->note;
+        // $doctorSchedule->status = $request->status;
+        // $doctorSchedule->note = $request->note;
 
         $doctorSchedule->save();
 
-        return redirect()->route('pages.doctor_schedules.index')->with('success', 'Doctor schedule updated successfully');
+        return redirect()->route('doctor-schedules.index')->with('success', 'Doctor schedule updated successfully');
     }
 
     // destroy
@@ -90,6 +150,6 @@ class DoctorScheduleController extends Controller
     {
         DoctorSchedule::find($id)->delete();
 
-        return redirect()->route('pages.doctor_schedules.index')->with('success', 'Doctor schedule deleted successfully');
+        return redirect()->route('doctor-schedules.index')->with('success', 'Doctor schedule deleted successfully');
     }
 }
